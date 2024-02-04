@@ -1,8 +1,12 @@
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
-import torch
+from transformers import AutoTokenizer, AutoModelForSequenceClassification # transformer
+import torch # pytorch
 from typing import Tuple 
+# setting for using cuda or cpu
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
+# 'ProsusAI/finbert' is a model for finances
+# in the huggingface documentation is more info on prosusai
+# is fined tuned on finance sentiment
 tokenizer = AutoTokenizer.from_pretrained("ProsusAI/finbert")
 model = AutoModelForSequenceClassification.from_pretrained("ProsusAI/finbert").to(device)
 labels = ["positive", "negative", "neutral"]
@@ -23,6 +27,7 @@ def estimate_sentiment(news):
 
 
 if __name__ == "__main__":
+    # this should be an example, but i didn't totally get it
     tensor, sentiment = estimate_sentiment(['markets responded negatively to the news!','traders were displeased!'])
     print(tensor, sentiment)
     print(torch.cuda.is_available())
